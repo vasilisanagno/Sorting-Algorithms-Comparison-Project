@@ -1,0 +1,22 @@
+function QS1pL(array,left,right)
+	i=left, j=right+1;
+	pivot=array[left];
+	
+	while True do
+		while array[++i]<pivot do
+			if i>=right 
+				break
+		while array[--j]>pivot do
+			if j<=left
+				break
+		if i>=j
+			break
+		if array[i]!=array[j]
+			swap array[i] array[j]
+	
+	swap array[left] array[j]
+	if left<j-1
+		Qs1pL(array,left,j-1)
+	if j+1<right
+		QS1pL(array,j+1,right)
+

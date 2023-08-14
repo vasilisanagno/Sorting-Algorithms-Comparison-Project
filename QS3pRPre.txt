@@ -1,0 +1,387 @@
+function partition(array,left,right,lp,mp)
+	i=left+2,j=left+2,n=right-1,k=right-1,rp
+	p=array[left],q=array[left+1],r=array[right]
+	
+	if left==right-1
+		if array[left]>array[right]
+			swap array[left] array[right]
+		mp=left
+		rp=left
+		lp=left
+		
+		return rp
+	while j<=n do
+		while array[j]<q&&j<=n do
+			if array[j]<p
+				if i!=j
+					swap array[i] array[j]
+				i++
+			j++
+		while array[n]>q&&j<=n do
+			if array[n]>r
+				if n!=k
+					swap array[n] array[k]
+				k--
+			n--
+		if j<=n
+			if array[j]<r
+				if array[n]<p
+					if i!=j
+						swap array[i] array[j]
+					if i!=n
+						swap array[i] array[n]
+					i++
+				else 
+					if n!=j
+						swap array[n] array[j]
+				if n!=k
+					swap array[n] array[k]
+				j++
+				n--
+				k--
+			else
+				if array[n]<p
+					if i!=j
+						swap array[i] array[j]
+					if i!=n
+						swap array[i] array[n]
+					i++
+				else
+					if j!=n
+						swap array[j] array[n]
+				j++
+				n--
+	i--
+	j--
+	n++
+	k++
+	if i!=left+1
+		swap array[left+1] array[i]
+	if i!=j
+		swap array[i] array[j]
+	i--
+	if i!=left
+		swap array[left] array[i]
+	if k!=right
+		swap array[right] array[k]
+	rp=k
+	lp=i
+	mp=j
+	
+	return rp
+
+function QS3pR(array,left,right)
+	if left<right 
+		lp,rp,mp,min,mid,max,min1,mid1,max1
+		random1=left + rand%(right-left+1)
+		random2=left + rand%(right-left+1)
+		while random1==random2 || random2>right do
+			random2=left + rand%(right-left+1)
+		random3=left + rand%(right-left+1)
+		while random1==random3 || random2==random3 || random3>right do
+			random3=left + rand%(right-left+1)
+		if left<right+1
+			pick_positions(array,random1,random2,random3,min,mid,max) //put in min the smallest value, in mid the median value and in max the biggest value
+			if min>left+1&&min<right&&mid>left+1&&mid<right&&max>left+1&&max<right
+				swap array[left] array[min]
+				swap array[right] array[max]
+				swap array[left+1] array[mid]
+			else
+				if (min==left||min==left+1||min==right)&&(mid==left||mid==left+1||mid==right)&&(max==left||max==left+1||max==right)
+					min1=array[min]
+					mid1=array[mid]
+					max1=array[max]
+					
+					array[left]=min1
+					array[left+1]=mid1
+					array[right]=max1
+				else
+					if min==left||min==left+1||min==right
+						if mid==left||mid==left+1||mid==right
+							if min==left
+								if mid==right
+									swap array[mid] array[left+1]
+							else
+								if min==left+1
+									if mid==right
+										swap array[mid] array[left+1]
+										swap array[mid] arra[left]
+									else
+										swap array[min] array[mid]
+								else
+									if mid==left+1
+										swap array[min] array[left]
+									else
+										swap array[mid] array[left+1]
+										swap array[min] array[left]
+							swap array[max] array[right]
+						else
+							if max==left||max==left+1||max==right
+								if min==left
+									if max==left+1 
+										swap array[max] array[right]
+								else 
+									if min==left+1
+										if max==left
+											swap array[max] array[right]
+										swap array[min] array[left]
+									else 
+										if max==left+1
+											swap array[max] array[left]
+										swap array[min] array[left]
+								swap array[mid] array[left+1]
+							else 
+								if min!=left
+									swap array[min] array[left]
+								swap array[max] array[right]
+								swap array[mid] array[left+1]
+					else 
+						if mid==left||mid==left+1||mid==right 
+							if max==left||max==left+1||max==right
+								if mid==left
+									if max==left+1
+										swap array[max] array[right]
+									swap array[mid] array[left+1]
+								else 
+									if mid==left+1 
+										if max==left 
+											swap array[max] array[right]
+									else 
+										if max==left
+											swap array[max] array[left+1]
+										swap array[mid] array[left+1]
+								swap array[min] array[left]
+							else 
+								swap array[mid] array[left+1]
+								swap array[min] array[left]
+								swap array[max] array[right]
+						else 
+							if max!=right
+								swap array[max] array[right]
+							swap array[mid] array[left+1]
+							swap array[min] array[left]
+							
+		rp = partition(array,left,right,lp,mp)
+		QS3pR(array,left,lp-1)
+		QS3pR(array,lp+1,mp-1)
+		QS3pR(array,mp+1,rp-1)
+		QS3pR(array,rp+1,right)
+
+function find_positions(array,pivot1,pivot2,pivot3,low,high,pos1,pos2,pos3)
+	i=low
+	
+	while i<=high do
+		if pivot1==array[i]&&pos1==-1
+			pos1=i
+		if pivot2==array[i]&&pos2==-1
+			pos2=i
+		if pivot3==array[i]&&pos3==-1
+			pos2=i
+		if pos1!=-1&&pos2!=-1&&pos3!=-1
+			break
+		i++
+	if pos1==-1||pos2==-1||pos3==-1
+		pos1=-2
+		pos2=-2
+		pos3=-2
+
+function find_limits(array,pivots,low,high,max,min,pivots_size,array_size)
+	flag1=0,i=0,flag2=0
+	
+	if low==0 
+		min=0
+		max=high+1
+		while i<pivots_size do
+			if array[high+1]<=pivots[i]
+				max=i-1
+				break
+			i++
+		if max==high+1
+			max=i-1
+		return
+	i=0
+	if high==array_size-1
+		max=pivots_size-1
+		while i<pivots_size do
+			if array[low-1]<=pivots[i]
+				min=i
+				break
+			i++
+		return
+	i=0
+	while i<pivots_size do
+		if array[low-1]<=pivots[i]&&flag1==0
+			min=i
+			flag1=1
+		if array[high+1]<=pivots[i]&&flag2==0
+			max=i-1
+			flag2=1
+		if flag1==1&&flag2==1
+			break
+
+function QS3pRPre(array,pivots,left,right,pivots_size,array_size)
+	if left<right 
+		lp,rp,mp,min,mid,max,min1,mid1,max1
+		pos1=-1,pos2=-1,pos3=-1,max2=-1,min2=-1,random1,random2,random3
+		if (left!=0||right!=array_size-1)&&pivots!=0
+			find_limits(array,pivots,left,right,max2,min2,pivots_size,array_size)
+			if min2<max2&&max2-min2>1
+				random1=min2 + rand%(max2-min2+1)
+				random2=min2 + rand%(max2-min2+1)
+				while random1==random2 || random2>right do
+					random2=min2 + rand%(max2-min2+1)
+				random3=min2 + rand%(max2-min2+1)
+				while random1==random3 || random2==random3 ||random3>right do
+					random3=min2 + rand%(max2-min2+1)
+					if left==right-1
+						break
+			else
+				if min2!=max2&&max2-min2>1
+					random1=max2 + rand%(min2-max2+1)
+					random2=max2 + rand%(min2-max2+1)
+					while random1==random2 || random2>right do
+						random2=max2 + rand%(min2-max2+1)
+					random3=max2 + rand%(min2-max2+1)
+					while random1==random3 || random2==random3 ||random3>right do
+						random3=max2 + rand%(min2-max2+1)
+						if left==right-1
+							break
+				else 
+					min2=0
+					max2=0
+		else
+			if pivots_size!=0
+				min2=0
+				max2=1
+				random1=rand%(pivots_size)
+				random2=rand%(pivots_size)
+				while random1==random2 || random2>right do
+					random2=rand%(pivots_size)
+				random3=rand%(pivots_size)
+				while random1==random3 || random2==random3 ||random3>right do
+					random3=rand%(pivots_size)
+					if left==right-1
+						break
+		if pivots_size!=0&&min2!=max2&&min2!=-1&&max2!=-1
+			find_position(array,pivots[random1],pivots[random2],pivots[random3],left,right,pos1,pos2,pos3)
+		else
+			pos1=-2
+			pos2=-2
+			pos3=-2
+		if left<right+1&&*pivots_size!=0&&pos1!=-2&&pos2!=-2&&pos3!=-2&&min2!=max2
+			if random1>random2&&random3>random2
+				k=random2+1
+				while k<pivots_size do
+					pivots[k-1]=pivots[k]
+					if (pivots[k]==random1&&pivots_size>3)||(pivots[k]==random3&&pivots_size>3)
+						pivots[k-1]=pivots[k+1]
+				pivots_size=pivots_size-3
+				pivots=(int *)realloc(pivots,sizeof(int)*pivots_size)
+			else
+				if random2>random1&&random3>random1
+					k=random1+1
+					while k<pivots_size do
+						pivots[k-1]=pivots[k]
+						if (pivots[k]==random2&&pivots_size>3)||(pivots[k]==random3&&pivots_size>3)
+							pivots[k-1]=pivots[k+1]
+					pivots_size=pivots_size-3
+					pivots=(int *)realloc(pivots,sizeof(int)*pivots_size)
+				else 
+					k=random3+1
+					while k<pivots_size do
+						pivots[k-1]=pivots[k]
+						if (pivots[k]==random2&&pivots_size>3)||(pivots[k]==random1&&pivots_size>3)
+							pivots[k-1]=pivots[k+1]
+					pivots_size=pivots_size-3
+					pivots=(int *)realloc(pivots,sizeof(int)*pivots_size)
+			random1=pos1
+			random2=pos2
+			random3=pos3
+			pick_positions(array,random1,random2,random3,min,mid,max) //put in min the smallest value, in mid the median value and in max the biggest value
+			if min>left+1&&min<right&&mid>left+1&&mid<right&&max>left+1&&max<right
+				swap array[left] array[min]
+				swap array[right] array[max]
+				swap array[left+1] array[mid]
+			else
+				if (min==left||min==left+1||min==right)&&(mid==left||mid==left+1||mid==right)&&(max==left||max==left+1||max==right)
+					min1=array[min]
+					mid1=array[mid]
+					max1=array[max]
+					
+					array[left]=min1
+					array[left+1]=mid1
+					array[right]=max1
+				else
+					if min==left||min==left+1||min==right
+						if mid==left||mid==left+1||mid==right
+							if min==left
+								if mid==right
+									swap array[mid] array[left+1]
+							else
+								if min==left+1
+									if mid==right
+										swap array[mid] array[left+1]
+										swap array[mid] arra[left]
+									else
+										swap array[min] array[mid]
+								else
+									if mid==left+1
+										swap array[min] array[left]
+									else
+										swap array[mid] array[left+1]
+										swap array[min] array[left]
+							swap array[max] array[right]
+						else
+							if max==left||max==left+1||max==right
+								if min==left
+									if max==left+1 
+										swap array[max] array[right]
+								else 
+									if min==left+1
+										if max==left
+											swap array[max] array[right]
+										swap array[min] array[left]
+									else 
+										if max==left+1
+											swap array[max] array[left]
+										swap array[min] array[left]
+								swap array[mid] array[left+1]
+							else 
+								if min!=left
+									swap array[min] array[left]
+								swap array[max] array[right]
+								swap array[mid] array[left+1]
+					else 
+						if mid==left||mid==left+1||mid==right 
+							if max==left||max==left+1||max==right
+								if mid==left
+									if max==left+1
+										swap array[max] array[right]
+									swap array[mid] array[left+1]
+								else 
+									if mid==left+1 
+										if max==left 
+											swap array[max] array[right]
+									else 
+										if max==left
+											swap array[max] array[left+1]
+										swap array[mid] array[left+1]
+								swap array[min] array[left]
+							else 
+								swap array[mid] array[left+1]
+								swap array[min] array[left]
+								swap array[max] array[right]
+						else 
+							if max!=right
+								swap array[max] array[right]
+							swap array[mid] array[left+1]
+							swap array[min] array[left]
+							
+			rp = partition(array,left,right,lp,mp)
+			QS3pR(array,left,lp-1)
+			QS3pR(array,lp+1,mp-1)
+			QS3pR(array,mp+1,rp-1)
+			QS3pR(array,rp+1,right)
+		else 
+			QS3pR(array,left,right)
+

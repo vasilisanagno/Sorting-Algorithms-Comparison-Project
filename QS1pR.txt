@@ -1,0 +1,25 @@
+function QS1pR(array,left,right)
+	if left<right
+		pivot,i=left,j=right+1
+		random=left + rand%(right-left+1)
+		
+		if random!=left
+			swap array[random] array[left]
+		
+		pivot=array[left]
+		while True do
+			while array[++i]<pivot do
+				if i>=right
+					break
+			while array[--j]>pivot do
+				if j<=left
+					break
+			if i>=j
+				break
+			if array[i]!=array[j]
+				swap array[i] array[j]
+			
+		swap array[j] array[left]
+		QS1pR(array,left,j-1)
+		QS1pR(array,j+1,right)
+

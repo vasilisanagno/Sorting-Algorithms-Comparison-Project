@@ -1,0 +1,32 @@
+function QS1pM(array,left,right)
+	if left<right
+		i=left,j=right+1,pivot
+		random1=left + rand%(right-left+1)
+		random2=left + rand%(right-left+1)
+		while random1==random2 || random2>right do
+			random2=left + rand%(right-left+1)
+		random3=left + rand%(right-left+1)
+		while random1==random3 || random2==random3 || random3>right do
+			random3=left + rand%(right-left+1)
+		//pick the median value of the three pivots 
+		median=median_pivot(array,random1,random2,random3)
+		
+		if median!=left
+			swap array[left] array[median]
+		pivot=array[left]
+		while True do
+			while array[++i]<pivot do
+			if i>=right 
+				break
+			while array[--j]>pivot do
+				if j<=left
+					break
+			if i>=j
+				break
+			if array[i]!=array[j]
+				swap array[i] array[j]
+	
+		swap array[left] array[j]
+		QS1pM(array,left,j-1)
+		QS1pM(array,j+1,right)
+	

@@ -1,0 +1,215 @@
+function partition(array,low,high,lp)
+	j=low+1
+	g=high-1,k=low+1,p=array[low],q=array[high]
+	while k<=g do
+		if array[k]<p
+			swap array[k] array[j]
+			j++
+		else 
+			if array[k]>=q
+				while array[g]>q && k<g do
+					g--
+				swap array[k] array[g]
+				g--
+				if array[k]<p
+					swap array[k] array[j]
+					j++
+		k++
+	j--
+	g++
+	
+	swap array[low] array[j]
+	swap array[high] array[g]
+	
+	lp=j
+	
+	return g
+
+function QS2pR(array,low,high)
+	if low<high
+		lp,rp
+		random1=low + rand%(high-low+1)
+		random2=low + rand%(high-low+1)
+		while random1==random2 do
+			random1=low + rand%(high-low+1)
+		if random1>low&&random1<high&&random2>low&&random2<high
+			if array[random1]>array[random2]
+				swap array[random1] array[high]
+				swap array[random2] array[low]
+			else 
+				swap array[random1] array[low]
+				swap array[random2] array[high]
+		else 
+			if (random1==high&&random2==low)||(random2==high&&random1==low)
+				if array[low>array[high]
+					swap array[low] array[high]
+			else 
+				if random1==low
+					if array[random1]<array[random2]
+						swap array[random2] array[high]
+					else 
+						swap array[random1] array[high]
+						swap array[random2] array[low]
+				else
+					if random1==high
+						if array[random2]<array[random1]
+							swap array[random2] array[low]
+						else
+							swap array[random1] array[low]
+							swap array[random2] array[high]
+					else 
+						if random2==low
+							if array[random2]<array[random1]
+								swap array[random1] array[high]
+							else
+								swap array[random2] array[high]
+								swap array[random1] array[low]
+						else 
+							if random2==high
+								if array[random2]>array[random1]
+									swap array[random1] array[low]
+								else 
+									swap array[random2] array[low]
+									swap array[random1] array[high]
+		
+		rp = partition(array,low,high,lp)
+		QS2pR(array,low,lp-1)
+		QS2pR(array,lp+1,rp-1)
+		QS2pR(array,rp+1,high)
+
+function find_positions(array,pivot1,pivot2,low,high,pos1,pos2)
+	i=low
+	
+	while i<=high do
+		if pivot1==array[i]&&pos1==-1
+			pos1=i
+		if pivot2==array[i]&&pos2==-1
+			pos2=i
+		if pos1!=-1&&pos2!=-1
+			break
+		i++
+	if pos1==-1||pos2==-1
+		pos1=-2
+		pos2=-2
+
+function find_limits(array,pivots,low,high,max,min,pivots_size,array_size)
+	flag1=0,i=0,flag2=0
+	
+	if low==0 
+		min=0
+		max=high+1
+		while i<pivots_size do
+			if array[high+1]<=pivots[i]
+				max=i-1
+				break
+			i++
+		if max==high+1
+			max=i-1
+		return
+	i=0
+	if high==array_size-1
+		max=pivots_size-1
+		while i<pivots_size do
+			if array[low-1]<=pivots[i]
+				min=i
+				break
+			i++
+		return
+	i=0
+	while i<pivots_size do
+		if array[low-1]<=pivots[i]&&flag1==0
+			min=i
+			flag1=1
+		if array[high+1]<=pivots[i]&&flag2==0
+			max=i-1
+			flag2=1
+		if flag1==1&&flag2==1
+			break
+
+function QS2pRPre(array,pivots,low,high,pivots_size,array_size)
+	if low<high
+		lp,rp,k=random2+1
+		pos1=-1,pos2=-1,max=-1,min=-1,random1,random2
+		
+		if (low!=0||high!=array_size-1)&&pivots_size!=0
+			find_limits(array,pivots,low,high,max,min,pivots_size,array_size)
+			if min<max
+				random1=min + rand%(max-min+1)
+				random2=min + rand%(max-min+1)
+				while random1==random2 do
+					random1=min + rand%(max-min+1)
+			else 
+				if min!=max
+					random1=max + rand%(min-max+1)
+					random2=max + rand%(min-max+1)
+					while random1==random2 do
+						random1=max + rand%(min-max+1)
+		else
+			if pivots_size!=0
+				min=0
+				max=1
+				random1=max + rand%(min-max+1)
+				random2=max + rand%(min-max+1)
+				while random1==random2
+					random1=max + rand%(min-max+1)
+		if pivots_size!=0&&min!=max&&min!=-1&&max!=-1
+			find_position(array,pivots[random1],pivots[random2],low,high,pos1,pos2)
+		else
+			pos1=-2
+			pos2=-2
+		if pivots_size!=0&&pos1!=-2&&pos2!=-2&&min!=max
+			if random1>random2
+				while k<pivots_size do
+					pivots[k-1]=pivots[k]
+					if pivots[k]==random1&&pivots_size>2
+						pivots[k-1]=pivots[k+1]
+				pivots_size=pivots_size-2
+				pivots=(int *)realloc(pivots,sizeof(int)*pivots_size)
+			random1=pos1;
+			random2=pos2;
+			if random1>low&&random1<high&&random2>low&&random2<high
+				if array[random1]>array[random2]
+					swap array[random1] array[high]
+					swap array[random2] array[low]
+				else 
+					swap array[random1] array[low]
+					swap array[random2] array[high]
+			else 
+				if (random1==high&&random2==low)||(random2==high&&random1==low)
+					if array[low>array[high]
+						swap array[low] array[high]
+				else 
+					if random1==low
+						if array[random1]<array[random2]
+							swap array[random2] array[high]
+						else 
+							swap array[random1] array[high]
+							swap array[random2] array[low]
+					else
+						if random1==high
+							if array[random2]<array[random1]
+								swap array[random2] array[low]
+							else
+								swap array[random1] array[low]
+								swap array[random2] array[high]
+						else 
+							if random2==low
+								if array[random2]<array[random1]
+									swap array[random1] array[high]
+								else
+									swap array[random2] array[high]
+									swap array[random1] array[low]
+							else 
+								if random2==high
+									if array[random2]>array[random1]
+										swap array[random1] array[low]
+									else 
+										swap array[random2] array[low]
+										swap array[random1] array[high]
+		
+			rp = partition(array,low,high,lp)
+			QS2pRPre(array,low,lp-1)
+			QS2pRPre(array,lp+1,rp-1)
+			QS2pRPre(array,rp+1,high)
+		else
+			QS2pR(array,low,high)

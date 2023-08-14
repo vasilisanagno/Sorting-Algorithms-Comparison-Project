@@ -1,0 +1,79 @@
+function partition(array,low,high,lp)
+	j=low+1
+	g=high-1,k=low+1,p=array[low],q=array[high]
+	while k<=g do
+		if array[k]<p
+			swap array[k] array[j]
+			j++
+		else 
+			if array[k]>=q
+				while array[g]>q && k<g do
+					g--
+				swap array[k] array[g]
+				g--
+				if array[k]<p
+					swap array[k] array[j]
+					j++
+		k++
+	j--
+	g++
+	
+	swap array[low] array[j]
+	swap array[high] array[g]
+	
+	lp=j
+	
+	return g
+
+function QS2pR(array,low,high)
+	if low<high
+		lp,rp
+		random1=low + rand%(high-low+1)
+		random2=low + rand%(high-low+1)
+		while random1==random2 do
+			random1=low + rand%(high-low+1)
+		if random1>low&&random1<high&&random2>low&&random2<high
+			if array[random1]>array[random2]
+				swap array[random1] array[high]
+				swap array[random2] array[low]
+			else 
+				swap array[random1] array[low]
+				swap array[random2] array[high]
+		else 
+			if (random1==high&&random2==low)||(random2==high&&random1==low)
+				if array[low>array[high]
+					swap array[low] array[high]
+			else 
+				if random1==low
+					if array[random1]<array[random2]
+						swap array[random2] array[high]
+					else 
+						swap array[random1] array[high]
+						swap array[random2] array[low]
+				else
+					if random1==high
+						if array[random2]<array[random1]
+							swap array[random2] array[low]
+						else
+							swap array[random1] array[low]
+							swap array[random2] array[high]
+					else 
+						if random2==low
+							if array[random2]<array[random1]
+								swap array[random1] array[high]
+							else
+								swap array[random2] array[high]
+								swap array[random1] array[low]
+						else 
+							if random2==high
+								if array[random2]>array[random1]
+									swap array[random1] array[low]
+								else 
+									swap array[random2] array[low]
+									swap array[random1] array[high]
+		
+		rp = partition(array,low,high,lp)
+		QS2pR(array,low,lp-1)
+		QS2pR(array,lp+1,rp-1)
+		QS2pR(array,rp+1,high)
+
